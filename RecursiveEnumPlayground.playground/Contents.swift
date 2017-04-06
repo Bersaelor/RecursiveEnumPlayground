@@ -11,10 +11,12 @@ extension Tree {
         switch self {
         case .leaf:
             return single(newValue)
-        case let .node(.leaf, value, right): //left side is empty
-            return Tree.node(left: single(newValue), value: value, right: right)
-        case let .node(left, value, right): //left side is empty
-            return Tree.node(left: left, value: value, right: right.insert(newValue))
+        case let .node(left, value, right):
+            if newValue < value {
+                return Tree.node(left: left.insert(newValue), value: value, right: right)
+            } else {
+                return Tree.node(left: left, value: value, right: right.insert(newValue))
+            }
         }
     }
 }
@@ -23,7 +25,7 @@ let integerTree = single(10)
 
 let treeWithNewValue = integerTree.insert(7)
 
-let treeWithOtherValue = integerTree.insert(3)
+let treeWithOtherValue = treeWithNewValue.insert(3)
 
 var tree = treeWithNewValue.insert(2)
 
