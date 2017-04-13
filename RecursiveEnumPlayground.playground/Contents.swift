@@ -7,31 +7,25 @@ func single<Element>(_ value: Element) -> Tree<Element> {
 }
 
 extension Tree {
-    func insert(_ newValue: Element) -> Tree {
+    func inserting(_ newValue: Element) -> Tree {
         switch self {
         case .leaf:
             return single(newValue)
         case let .node(left, value, right):
             if newValue < value {
-                return Tree.node(left: left.insert(newValue), value: value, right: right)
+                return Tree.node(left: left.inserting(newValue), value: value, right: right)
             } else {
-                return Tree.node(left: left, value: value, right: right.insert(newValue))
+                return Tree.node(left: left, value: value, right: right.inserting(newValue))
             }
         }
     }
 }
 
-let integerTree = single(10)
+let tree = single(7).inserting(2).inserting(10)
 
-let treeWithNewValue = integerTree.insert(7)
-
-let treeWithOtherValue = treeWithNewValue.insert(3)
-
-var tree = treeWithNewValue.insert(2)
-
-tree = tree.insert(1)
-tree = tree.insert(3)
-tree = tree.insert(5)
+let tree2 = tree.inserting(1)
+let tree3 = tree2.inserting(3)
+let tree4 = tree3.inserting(5)
 
 
 extension Tree {
@@ -45,7 +39,7 @@ extension Tree {
     }
 }
 
-treeWithNewValue.count
 tree.count
-tree = tree.insert(6)
-tree.count
+tree2.count
+let tree5 = tree2.inserting(6)
+tree5.count
